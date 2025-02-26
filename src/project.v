@@ -16,10 +16,12 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset (not needed)
 );
 
-    assign uo_out = ui_in & uio_in;  // Bitwise AND operation
+    // Correctly assign the bitwise AND operation to output
+    assign uo_out = ui_in & uio_in;  
 
-    assign uio_out = 0; // Unused
-    assign uio_oe = 0;  // Unused
+    // Required assignments to avoid workflow errors
+    assign uio_out = 8'b00000000;  // Set to zero to prevent synthesis issues
+    assign uio_oe  = 8'b00000000;  // Ensure it's properly set to avoid floating values
 
     // List all unused inputs to prevent warnings
     wire _unused = &{ena, clk, rst_n, 1'b0};
